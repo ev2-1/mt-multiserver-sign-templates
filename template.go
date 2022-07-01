@@ -35,6 +35,10 @@ func registerTemplate(id TemplateID, t Template) {
 	templatesMu.Lock()
 	defer templatesMu.Unlock()
 
+	if len(templates) == 0 {
+		templates = make(map[TemplateID]Template)
+	}
+
 	templates[id] = t
 }
 

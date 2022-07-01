@@ -10,7 +10,7 @@ import (
 var initTemplatesMu sync.Once
 
 func initTemplates() {
-	initTemplatesMu.Do(func() {
+	initTemplatesMu.Do(func() {	
 		registerTemplate(Text, func(pos signs.SignPos, a ...string) (error, *signs.Sign) {
 			if len(a) != 1 {
 				return errors.New("Not enough arguments to Template Text"), nil
@@ -37,12 +37,12 @@ func initTemplates() {
 			return nil, &signs.Sign{
 				Pos: &pos,
 
-				Text:  "X-------------X\n|%s|\n|%s|\nX-------------X",
+				Text:  "X--------------X\n|%s|\n|%s|\nX--------------X",
 				Color: "black",
 				Dyn: []signs.DynContent{
 					&signs.Center{
 						Filler: ' ',
-						Length: 14,
+						Length: 12,
 
 						Content: &signs.Text{
 							Text: a[0],
@@ -50,12 +50,16 @@ func initTemplates() {
 					},
 					&signs.Center{
 						Filler: ' ',
-						Length: 14,
+						Length: 12,
 
 						Content: &signs.PlayerCnt{
 							Srv: a[0],
 						},
 					},
+				},
+
+				OnClick: &signs.Hop{
+					Srv: a[0],
 				},
 			}
 		})
